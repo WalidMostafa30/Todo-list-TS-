@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .nav-link {
+    @apply p-2 sm:px-4 font-medium rounded text-xl transition relative border-solid border-2 border-slate-600;
+  }
+  .nav-link-span {
+    @apply absolute top-[-5px] right-[-10px] bg-red-800 text-white w-[25px] h-[25px] flex items-center justify-center rounded-full;
+  }
+}

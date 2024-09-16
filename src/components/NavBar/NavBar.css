@@ -1,0 +1,9 @@
+.NavBar {
+  a {
+    &:hover,
+    &.active {
+      background-color: #475569;
+      color: #fff;
+    }
+  }
+}
