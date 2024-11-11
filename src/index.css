@@ -4,9 +4,12 @@
 
 @layer components {
   .nav-link {
-    @apply p-2 sm:px-4 font-medium rounded text-xl transition relative border-solid border-2 border-slate-600;
+    @apply p-2 sm:px-4 font-medium rounded text-base sm:text-xl transition relative border-2 border-white text-white;
   }
   .nav-link-span {
-    @apply absolute top-[-5px] right-[-10px] bg-red-800 text-white w-[25px] h-[25px] flex items-center justify-center rounded-full;
+    @apply absolute top-[-5px] right-[-10px] bg-red-800 text-white w-[22px] h-[22px] flex items-center justify-center rounded-full border border-black;
+  }
+  .empty-msg {
+    @apply w-fit mx-auto text-center text-2xl mt-40 p-3 rounded-md bg-black text-white shadow-md shadow-black;
   }
 }

@@ -1,32 +1,36 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { FormObj } from "../types/types";
 
-interface FormObj {
-  content: string;
-  color: string;
-  id: number;
-  status: string;
-}
+const mainData = JSON.parse(
+  localStorage.getItem("TodoTS") || "[]"
+) as FormObj[];
+
+const todoInLocalStorage = (data: FormObj[]) => {
+  localStorage.setItem("TodoTS", JSON.stringify(data));
+};
 
 interface TodoState {
   mainData: FormObj[];
   todos: FormObj[];
   inprogress: FormObj[];
   finished: FormObj[];
+  editForm: {
+    status: boolean;
+    id: number | null;
+    content: string | null;
+  };
 }
-
-const mainData = JSON.parse(
-  localStorage.getItem("todoTS") || "[]"
-) as FormObj[];
-
-const todoInLocalStorage = (data: FormObj[]) => {
-  localStorage.setItem("todoTS", JSON.stringify(data));
-};
 
 const initialState: TodoState = {
   mainData,
   todos: [],
   inprogress: [],
   finished: [],
+  editForm: {
+    status: false,
+    id: null,
+    content: null,
+  },
 };
 
 export const todoSlice = createSlice({
@@ -45,17 +49,6 @@ export const todoSlice = createSlice({
       todoInLocalStorage(state.mainData);
     },
 
-    editTodo: (state, action) => {
-      const currentItem = state.mainData.find(
-        (item) => item.id === action.payload.id
-      );
-
-      if (currentItem) {
-        currentItem.content = action.payload.content;
-      }
-      todoInLocalStorage(state.mainData);
-    },
-
     getTodos: (state) => {
       state.todos = state.mainData.filter((item) => item.status === "todo");
       state.inprogress = state.mainData.filter(
@@ -66,34 +59,36 @@ export const todoSlice = createSlice({
       );
     },
 
-    moveToTodos: (state, action: PayloadAction<number>) => {
-      const currentItem = state.mainData.find(
-        (item) => item.id === action.payload
-      );
+    changeStatus: (state, action) => {
+      const { id, status } = action.payload;
+      const currentItem = state.mainData.find((item) => item.id === id);
       if (currentItem) {
-        currentItem.status = "todo";
+        currentItem.status = status;
       }
       todoInLocalStorage(state.mainData);
     },
 
-    moveToInprogress: (state, action: PayloadAction<number>) => {
-      const currentItem = state.mainData.find(
-        (item) => item.id === action.payload
-      );
+    editTodo: (state, action) => {
+      const { id, content } = action.payload;
+      const currentItem = state.mainData.find((item) => item.id === id);
+
       if (currentItem) {
-        currentItem.status = "inprogress";
+        currentItem.content = content;
       }
       todoInLocalStorage(state.mainData);
     },
 
-    moveToFinished: (state, action: PayloadAction<number>) => {
-      const currentItem = state.mainData.find(
-        (item) => item.id === action.payload
-      );
-      if (currentItem) {
-        currentItem.status = "finished";
-      }
-      todoInLocalStorage(state.mainData);
+    openEditForm: (state, action) => {
+      const { id, content } = action.payload;
+      state.editForm.status = true;
+      state.editForm.id = id;
+      state.editForm.content = content;
+    },
+
+    closeEditForm: (state) => {
+      state.editForm.status = false;
+      state.editForm.id = null;
+      state.editForm.content = null;
     },
   },
 });
@@ -102,9 +97,9 @@ export const {
   addTodo,
   removeTodo,
   editTodo,
+  openEditForm,
+  closeEditForm,
   getTodos,
-  moveToTodos,
-  moveToInprogress,
-  moveToFinished,
+  changeStatus,
 } = todoSlice.actions;
 export default todoSlice.reducer;

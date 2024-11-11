@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import "./NavBar.css";
-import { useAppSelector } from "../../store/store";
+import { useAppSelector } from "../../../store/store";
 
 const NavBar = () => {
   const { todos, inprogress, finished } = useAppSelector((state) => state.todo);

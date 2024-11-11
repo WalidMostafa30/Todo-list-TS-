@@ -1,19 +1,9 @@
 import { useState } from "react";
-import Colors from "../Colors/Colors";
 import { useAppDispatch } from "../../store/store";
 import { addTodo } from "../../store/todoSlice";
 import toast from "react-hot-toast";
 
 const Inputs = () => {
-  const theColors: string[] = [
-    "#475569",
-    "#d2328b",
-    "#eaa751",
-    "#326bd2",
-    "#c2172f",
-    "#1ac217",
-  ];
-  const [index, setIndex] = useState<number>(0);
   const [input, setInput] = useState<string>("");
   const dispatch = useAppDispatch();
 
@@ -23,22 +13,21 @@ const Inputs = () => {
       dispatch(
         addTodo({
           content: input.trim(),
-          color: theColors[index],
           id: new Date().getTime(),
           status: "todo",
         })
       );
       setInput("");
-      toast.success("Task added successfully 😀");
+      toast.success("Task added successfully");
     } else {
-      toast.error("Enter your Task to add");
+      toast.error("Enter your Todo to add");
     }
   };
 
   return (
     <form
       onSubmit={onsubmitHandler}
-      className="mt-5 p-2 rounded-md bg-slate-200 flex gap-1"
+      className="mt-5 p-2 mx-auto lg:w-3/6 rounded-lg bg-black shadow shadow-black flex gap-1"
     >
       <input
         value={input}
@@ -49,8 +38,7 @@ const Inputs = () => {
         placeholder="Add Task.."
         className="outline-none text-xl p-2 rounded-md w-full"
       />
-      <Colors theColors={theColors} index={index} setIndex={setIndex} />
-      <button className="p-2 text-slate-600 font-bold border-solid border-2 border-slate-600 rounded-md">
+      <button className="p-2 px-4 text-white font-bold border-solid border-2 border-white rounded-md">
         Add
       </button>
     </form>

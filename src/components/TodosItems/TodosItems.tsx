@@ -1,30 +1,14 @@
 import { useLocation } from "react-router-dom";
 import { useAppDispatch } from "../../store/store";
-import {
-  moveToFinished,
-  moveToInprogress,
-  moveToTodos,
-  removeTodo,
-} from "../../store/todoSlice";
+import { changeStatus, openEditForm, removeTodo } from "../../store/todoSlice";
 import toast from "react-hot-toast";
-import EditTaskModal from "../EditTaskModal/EditTaskModal";
-import { useState } from "react";
-
-interface FormObj {
-  content: string;
-  color: string;
-  id: number;
-  status: string;
-}
+import { FormObj } from "../../types/types";
 
 interface TodosItemsProps {
   item: FormObj;
 }
 
 const TodosItems: React.FC<TodosItemsProps> = ({ item }) => {
-  const [editModal, setEditModal] = useState<boolean>(false);
-  const toggleModal = () => setEditModal((prev) => !prev);
-
   const location = useLocation();
   const dispatch = useAppDispatch();
 
@@ -33,52 +17,35 @@ const TodosItems: React.FC<TodosItemsProps> = ({ item }) => {
     toast.success("Task removed");
   };
 
-  const addTaskTodo = (id: number) => {
-    dispatch(moveToTodos(id));
-    toast.success("Task back to Todo");
-  };
-
-  const addTaskToInprogress = (id: number) => {
-    dispatch(moveToInprogress(id));
-    toast.success("Task InProgress now");
-  };
-
-  const addTaskFinished = (id: number) => {
-    dispatch(moveToFinished(id));
-    toast.success("Task Finished");
+  const todoActions = (id: number, status: string) => {
+    dispatch(changeStatus({ id, status }));
+    toast.success(`Task go to ${status}`);
   };
 
   return (
-    <>
-      <div
-        className={`TodosItems shadow-lg rounded-md p-3 border-solid border-2 relative flex flex-col justify-between`}
-        style={{
-          backgroundColor: `${item.color}30`,
-          borderColor: `${item.color}`,
-        }}
-      >
-        <div className="absolute top-[-15px] right-[-10px]">
-          <span
-            className="text-white  rounded-md text-xl px-2 mx-2 cursor-pointer"
-            style={{ backgroundColor: `${item.color}` }}
-            onClick={toggleModal}
-          >
-            Edit
-          </span>
+    <div className="shadow-md shadow-black bg-black rounded-lg p-1 flex flex-col">
+      <div className="flex justify-end mb-1 p-1">
+        <span
+          className="text-black bg-white rounded-md text-xl py-1 px-3 mx-2 font-semibold cursor-pointer"
+          onClick={() =>
+            dispatch(openEditForm({ id: item.id, content: item.content }))
+          }
+        >
+          Edit
+        </span>
 
-          <span
-            className="text-white  rounded-md text-xl px-2 cursor-pointer"
-            style={{ backgroundColor: `${item.color}` }}
-            onClick={() => removeTask(item.id)}
-          >
-            X
-          </span>
-        </div>
+        <span
+          className="text-white bg-red-800 rounded-md text-xl py-1 px-3 font-semibold cursor-pointer"
+          onClick={() => removeTask(item.id)}
+        >
+          X
+        </span>
+      </div>
 
+      <div className="bg-white p-1 rounded-md h-full flex flex-col justify-between">
         <p
           className="line-clamp-3 font-semibold text-2xl"
           style={{
-            color: `${item.color}`,
             textDecoration:
               location.pathname === "/finished" ? "line-through" : "none",
           }}
@@ -89,35 +56,31 @@ const TodosItems: React.FC<TodosItemsProps> = ({ item }) => {
         <div className="mt-4 flex justify-between">
           {location.pathname === "/inprogress" && (
             <span
-              className="p-2 rounded-md font-semibold cursor-pointer text-white"
-              style={{ backgroundColor: `${item.color}` }}
-              onClick={() => addTaskTodo(item.id)}
+              className="p-2 rounded-md font-semibold cursor-pointer text-white bg-black"
+              onClick={() => todoActions(item.id, "todo")}
             >
               Todo
             </span>
           )}
           {location.pathname !== "/inprogress" && (
             <span
-              className="p-2 rounded-md font-semibold cursor-pointer text-white"
-              style={{ backgroundColor: `${item.color}` }}
-              onClick={() => addTaskToInprogress(item.id)}
+              className="p-2 rounded-md font-semibold cursor-pointer text-white bg-black"
+              onClick={() => todoActions(item.id, "inprogress")}
             >
               Inprogress
             </span>
           )}
           {location.pathname === "/inprogress" && (
             <span
-              className="p-2 rounded-md font-semibold cursor-pointer text-white"
-              style={{ backgroundColor: `${item.color}` }}
-              onClick={() => addTaskFinished(item.id)}
+              className="p-2 rounded-md font-semibold cursor-pointer text-white bg-black"
+              onClick={() => todoActions(item.id, "finished")}
             >
               Finished
             </span>
           )}
         </div>
       </div>
-      {editModal && <EditTaskModal item={item} toggleModal={toggleModal} />}
-    </>
+    </div>
   );
 };
 

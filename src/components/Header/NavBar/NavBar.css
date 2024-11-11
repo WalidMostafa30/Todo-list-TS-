@@ -2,8 +2,8 @@
   a {
     &:hover,
     &.active {
-      background-color: #475569;
-      color: #fff;
+      background-color: white;
+      color: black;
     }
   }
 }
