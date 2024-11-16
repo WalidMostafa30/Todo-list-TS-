@@ -1,50 +1,42 @@
-# React + TypeScript + Vite
+# Todo List App ✅
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a powerful **Todo List App** built with **Next.js**, **TypeScript**, **Redux Toolkit**, **Tailwind CSS**, and **React-Hot-Toast**. It helps you manage tasks effortlessly by allowing you to **add**, **edit**, **delete**, and organize tasks into different stages of progress.
 
-Currently, two official plugins are available:
+## Features ✨
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Add Tasks**: Quickly add new tasks to your list.
+- **Edit Tasks**: Modify task details anytime.
+- **Delete Tasks**: Remove tasks you no longer need.
+- **Organize Tasks**:
+  - Move tasks to the **In Progress** page to track ongoing work.
+  - Move tasks to the **Finished** page, where completed tasks are styled with a line-through for easy distinction.
+- **Task Counters**: Each page (**Todo**, **In Progress**, **Finished**) displays a **red notification badge** at the top, showing the number of tasks in that category.
+- **Error Handling**: All user inputs are validated when adding or editing tasks, ensuring a smooth experience.
+- **Real-Time Notifications**: User-friendly feedback is displayed using **React-Hot-Toast** for every action (e.g., success, error).
+- **Responsive Design**: A clean, responsive interface built with **Tailwind CSS**.
 
-## Expanding the ESLint configuration
+## Technologies Used 🛠️
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Next.js**: For server-side rendering and efficient performance.
+- **TypeScript**: Ensures type safety and code reliability.
+- **Redux Toolkit**: Simplifies state management for tasks.
+- **Tailwind CSS**: Provides a sleek and modern design.
+- **React-Hot-Toast**: Displays toast notifications for user actions.
 
-- Configure the top-level `parserOptions` property like this:
+## How to Use? 🤔
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+1. **Add a Task**: Enter a task title and details, then click "Add Task".
+2. **Edit a Task**: Select a task and make changes to its title or details.
+3. **Delete a Task**: Permanently remove a task by clicking "Delete".
+4. **Move Tasks**:
+   - To **In Progress**: Drag or move tasks to the "In Progress" section.
+   - To **Finished**: Mark tasks as complete to move them to the "Finished" section. Completed tasks will have a line-through for easy recognition.
+5. **Track Task Counts**: Each page shows a **red circle** in the header with the number of tasks in that category (Todo, In Progress, or Finished).
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Live Demo 🌐
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+https://todo-list-ts2001.netlify.app/
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Screenshot 📸
+
+![todo-list-pages](https://github.com/user-attachments/assets/304a75fb-8826-41eb-8c3d-439825fa868a)
