@@ -10,6 +10,7 @@ interface TodosItemsProps {
 
 const TodosItems: React.FC<TodosItemsProps> = ({ item }) => {
   const location = useLocation();
+
   const dispatch = useAppDispatch();
 
   const removeTask = (id: number) => {
