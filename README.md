@@ -34,9 +34,7 @@ This is a powerful **Todo List App** built with **Next.js**, **TypeScript**, **R
 5. **Track Task Counts**: Each page shows a **red circle** in the header with the number of tasks in that category (Todo, In Progress, or Finished).
 
 ## Live Demo 🌐
-
 https://todo-list-ts2001.netlify.app/
 
 ## Screenshot 📸
-
 ![todo-list-pages](https://github.com/user-attachments/assets/304a75fb-8826-41eb-8c3d-439825fa868a)
